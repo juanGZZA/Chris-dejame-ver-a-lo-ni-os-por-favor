@@ -4,36 +4,20 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.piamoviles.ui.theme.PIAMovilesTheme
-import java.nio.file.WatchEvent
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,63 +26,107 @@ class MainActivity : ComponentActivity() {
             PIAMovilesTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background) {
+                    color = Color(0xFFE3F2FD) // Fondo azul claro
+                ) {
                     InicioSesion()
-
                 }
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun InicioSesion(){
+fun InicioSesion() {
+    var correoElectronico by remember { mutableStateOf("") }
+    var contraseña by remember { mutableStateOf("") }
+    val context = LocalContext.current
+
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier.padding(vertical = 10.dp),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text("Iniciar Sesion", fontSize = 32.sp)
-            Row {
-                Text("¿Es tu primera vez?")
-                Text("Registrate",
-                    modifier = Modifier.padding(4.dp).clickable {
-                        // Aquí puedes agregar una acción al hacer clic en "Registrate"
+        Text(
+            text = "Iniciar Sesión",
+            fontSize = 32.sp,
+            color = Color(0xFF1976D2) // Azul más oscuro para el título
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Row {
+            Text("¿Es tu primera vez?")
+            Text(
+                text = "Regístrate",
+                modifier = Modifier
+                    .padding(4.dp)
+                    .clickable {
+                        // Aquí puedes agregar una acción al hacer clic en "Regístrate"
                     },
-                    style = TextStyle(textDecoration = TextDecoration.Underline),
-                    )
-            }
+                style = TextStyle(
+                    textDecoration = TextDecoration.Underline,
+                    color = Color(0xFF1976D2) // Azul más oscuro para el texto de registro
+                )
+            )
         }
-        Column(
-            modifier = Modifier.padding(vertical = 10.dp)
+        Spacer(modifier = Modifier.height(16.dp))
+        Column {
+            Text("Email:", color = Color(0xFF1976D2))
+            OutlinedTextField(
+                value = correoElectronico,
+                onValueChange = { correoElectronico = it },
+                label = { Text("Correo Electrónico") },
+                modifier = Modifier.fillMaxWidth(),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Color(0xFF1976D2),
+                    unfocusedBorderColor = Color(0xFF90CAF9)
+                )
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Column {
+            Text("Contraseña:", color = Color(0xFF1976D2))
+            OutlinedTextField(
+                value = contraseña,
+                onValueChange = { contraseña = it },
+                label = { Text("Contraseña") },
+                modifier = Modifier.fillMaxWidth(),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Color(0xFF1976D2),
+                    unfocusedBorderColor = Color(0xFF90CAF9)
+                )
+            )
+            Text(
+                text = "¿Olvidaste tu contraseña?",
+                modifier = Modifier
+                    .padding(vertical = 10.dp)
+                    .clickable { /* Acción para recuperar contraseña */ },
+                style = TextStyle(
+                    textDecoration = TextDecoration.Underline,
+                    color = Color(0xFF1976D2)
+                )
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(
+            onClick = {
+                Toast.makeText(
+                    context,
+                    "Iniciaste sesión",
+                    Toast.LENGTH_LONG
+                ).show()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+            shape = RoundedCornerShape(8.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF1976D2),
+                contentColor = Color.White
+            )
         ) {
-            Text("Email:")
-            OutlinedTextField(value = "Email", onValueChange = {})
+            Text("Iniciar Sesión")
         }
-        Column(
-            modifier = Modifier.padding(10.dp)
-        ) {
-            Text("Contraseña:")
-            OutlinedTextField(value = "Contraseña", onValueChange = {})
-            Text("¿Olvidaste tu contraseña?",
-                modifier = Modifier.padding(vertical = 10.dp).clickable {},
-                style = TextStyle(textDecoration = TextDecoration.Underline))
-        }
-        val context = LocalContext.current
-        Button(onClick = {
-            Toast.makeText(
-                context,
-                "Iniciaste sesion",
-                Toast.LENGTH_LONG
-            ).show()
-        }) {
-            Text("Inicar Sesion")
-        }
-
     }
 }
