@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
             PIAMovilesTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = Color(0xFFE3F2FD) // Fondo azul claro
+                    color = Color(0xFFE3F2FD)
                 ) {
                     InicioSesion()
                 }
@@ -52,7 +52,7 @@ fun InicioSesion() {
         Text(
             text = "Iniciar Sesión",
             fontSize = 32.sp,
-            color = Color(0xFF1976D2) // Azul más oscuro para el título
+            color = Color(0xFF1976D2)
         )
         Spacer(modifier = Modifier.height(16.dp))
         Row {
@@ -62,11 +62,11 @@ fun InicioSesion() {
                 modifier = Modifier
                     .padding(4.dp)
                     .clickable {
-                        // Aquí puedes agregar una acción al hacer clic en "Regístrate"
+                        // Aqui iria algun mugrero que no se aun
                     },
                 style = TextStyle(
                     textDecoration = TextDecoration.Underline,
-                    color = Color(0xFF1976D2) // Azul más oscuro para el texto de registro
+                    color = Color(0xFF1976D2)
                 )
             )
         }
@@ -101,7 +101,7 @@ fun InicioSesion() {
                 text = "¿Olvidaste tu contraseña?",
                 modifier = Modifier
                     .padding(vertical = 10.dp)
-                    .clickable { /* Acción para recuperar contraseña */ },
+                    .clickable { /* Aqui tambien va algun mugrero */ },
                 style = TextStyle(
                     textDecoration = TextDecoration.Underline,
                     color = Color(0xFF1976D2)
