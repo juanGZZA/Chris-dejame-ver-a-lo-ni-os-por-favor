@@ -1,4 +1,4 @@
-package com.example.piamoviles
+package com.example.piamoviles.pantallas
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

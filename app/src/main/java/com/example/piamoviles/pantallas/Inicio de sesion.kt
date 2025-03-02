@@ -1,13 +1,11 @@
-package com.example.piamoviles
+package com.example.piamoviles.pantallas
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,10 +21,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun Registro(navController: NavController) {
-    var nombre by remember { mutableStateOf("") }
+fun InicioSesion(navController: NavController) {
     var correoElectronico by remember { mutableStateOf("") }
     var contraseña by remember { mutableStateOf("") }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -34,28 +32,16 @@ fun Registro(navController: NavController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Registro",
-            fontSize = 32.sp,
-            color = Color(0xFF1976D2)
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        OutlinedTextField(
-            value = nombre,
-            onValueChange = { nombre = it },
-            label = { Text("Nombre completo") },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true
-        )
-        Spacer(modifier = Modifier.height(8.dp))
+        Text("Iniciar Sesión", fontSize = 32.sp, color = Color(0xFF1976D2))
+        Spacer(Modifier.padding(16.dp))
         OutlinedTextField(
             value = correoElectronico,
             onValueChange = { correoElectronico = it },
-            label = { Text("Correo electrónico") },
+            label = { Text("Correo Electrónico") },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(Modifier.padding(16.dp))
         OutlinedTextField(
             value = contraseña,
             onValueChange = { contraseña = it },
@@ -63,15 +49,11 @@ fun Registro(navController: NavController) {
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(
-            onClick = {
-                // Navegar de regreso a la pantalla de inicio de sesión
-                navController.popBackStack()
-            },
+        Spacer(Modifier.padding(16.dp))
+        ActionButton(
+            text = "Iniciar Sesión",
+            onClick = { navController.navigate("mascotas") },
             modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Registrarse")
-        }
+        )
     }
 }
