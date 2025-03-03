@@ -66,5 +66,10 @@ fun Registro(navController: NavController) {
             onClick = { navController.popBackStack() },
             modifier = Modifier.fillMaxWidth()
         )
+        ActionButton(
+            text = "Iniciar Sesion",
+            onClick = { navController.popBackStack() },
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }

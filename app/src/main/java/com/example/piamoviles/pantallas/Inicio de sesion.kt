@@ -1,5 +1,6 @@
 package com.example.piamoviles.pantallas
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -33,7 +34,11 @@ fun InicioSesion(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text("Iniciar Sesión", fontSize = 32.sp, color = Color(0xFF1976D2))
-        Spacer(Modifier.padding(16.dp))
+        Spacer(Modifier.padding(4.dp))
+        Text("Registrate", fontSize = 16.sp, color = Color(0xFF1976D2), modifier = Modifier.clickable{
+            navController.navigate("registro")
+        })
+        Spacer(Modifier.padding(12.dp))
         OutlinedTextField(
             value = correoElectronico,
             onValueChange = { correoElectronico = it },

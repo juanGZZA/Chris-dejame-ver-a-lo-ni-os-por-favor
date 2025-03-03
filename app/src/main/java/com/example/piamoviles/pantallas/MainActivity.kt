@@ -11,6 +11,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.piamoviles.ui.theme.PIAMovilesTheme
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,27 +34,70 @@ class MainActivity : ComponentActivity() {
                         composable("registro") {
                             Registro(navController)
                         }
-                        composable("recuperar-contraseña"){
+                        composable("recuperar-contraseña") {
                             ContraseñaOlvidada(navController)
                         }
-                        composable("mascotas"){
+                        composable("mascotas") {
                             mascotasScreen(navController)
                         }
-                        composable("menu"){
-                            MenuScreen(navController)
+                        composable(
+                            "menu/{mascotaId}",
+                            arguments = listOf(navArgument("mascotaId") { type = NavType.IntType })
+                        ) { backStackEntry ->
+                            val mascotaId = backStackEntry.arguments?.getInt("mascotaId")
+                            if (mascotaId != null) {
+                                MenuScreen(navController, mascotaId)
+                            }
                         }
-                        composable("salud"){
-                            SaludScreen(navController)
+                        composable(
+                            "salud/{mascotaId}",
+                            arguments = listOf(navArgument("mascotaId") { type = NavType.IntType })
+                        ) { backStackEntry ->
+                            val mascotaId = backStackEntry.arguments?.getInt("mascotaId")
+                            if (mascotaId != null) {
+                                SaludScreen(navController, mascotaId)
+                            }
                         }
-                        composable("notas"){
-                            NotasScreen(navController)
+                        composable(
+                            "notas/{mascotaId}",
+                            arguments = listOf(navArgument("mascotaId") { type = NavType.IntType })
+                        ) { backStackEntry ->
+                            val mascotaId = backStackEntry.arguments?.getInt("mascotaId")
+                            if (mascotaId != null) {
+                                NotasScreen(navController, mascotaId) // Pasa mascotaId
+                            }
                         }
-                        composable("informacion"){
-                            InformacionScreen(navController)
+                        composable(
+                            "informacion/{mascotaId}",
+                            arguments = listOf(navArgument("mascotaId") { type = NavType.IntType })
+                        ) { backStackEntry ->
+                            val mascotaId = backStackEntry.arguments?.getInt("mascotaId")
+                            if (mascotaId != null) {
+                                InformacionScreen(navController, mascotaId) // Pasa mascotaId
+                            }
                         }
-                        composable("habitos"){
-                            HabitosScreen(navController)
+                        composable(
+                            "habitos/{mascotaId}",
+                            arguments = listOf(navArgument("mascotaId") { type = NavType.IntType })
+                        ) { backStackEntry ->
+                            val mascotaId = backStackEntry.arguments?.getInt("mascotaId")
+                            if (mascotaId != null) {
+                                HabitosScreen(navController, mascotaId) // Pasa mascotaId
+                            }
                         }
+                        composable("registrar-mascota") {
+                            RegistrarMascotaScreen(navController)
+                        }
+                        composable(
+                            "editar-mascota/{mascotaId}",
+                            arguments = listOf(navArgument("mascotaId") { type = NavType.IntType })
+                        ) { backStackEntry ->
+                            val mascotaId = backStackEntry.arguments?.getInt("mascotaId")
+                            if (mascotaId != null) {
+                                EditarMascotaScreen(navController, mascotaId)
+                            }
+                        }
+
                     }
                 }
             }

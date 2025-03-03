@@ -20,7 +20,6 @@ fun PetDetailScreen(
     navController: NavController,
     imageUrl: String,
     content: @Composable () -> Unit,
-    onEdit: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -38,8 +37,6 @@ fun PetDetailScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
-            ActionButton("Editar", onClick = onEdit)
-            Spacer(Modifier.padding(24.dp))
             ActionButton("Regresar", onClick = { navController.popBackStack() })
         }
     }
