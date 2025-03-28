@@ -1,8 +1,11 @@
 package com.example.piamoviles.pantallas
 
+import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.ui.Modifier
@@ -13,10 +16,21 @@ import androidx.navigation.compose.rememberNavController
 import com.example.piamoviles.ui.theme.PIAMovilesTheme
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import android.Manifest
 
 class MainActivity : ComponentActivity() {
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (!isGranted) {
+            Toast.makeText(this, "Notificaciones desactivadas", Toast.LENGTH_LONG).show()
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
         setContent {
             PIAMovilesTheme {
                 Surface(
@@ -95,6 +109,26 @@ class MainActivity : ComponentActivity() {
                             val mascotaId = backStackEntry.arguments?.getInt("mascotaId")
                             if (mascotaId != null) {
                                 EditarMascotaScreen(navController, mascotaId)
+                            }
+                        }
+                        // En MainActivity.kt, agregar nuevas rutas
+                        composable(
+                            "agregar-recordatorio/{mascotaId}",
+                            arguments = listOf(navArgument("mascotaId") { type = NavType.IntType })
+                        ) { backStackEntry ->
+                            val mascotaId = backStackEntry.arguments?.getInt("mascotaId")
+                            if (mascotaId != null) {
+                                AgregarRecordatorioScreen(navController, mascotaId)
+                            }
+                        }
+
+                        composable(
+                            "recordatorios/{mascotaId}",
+                            arguments = listOf(navArgument("mascotaId") { type = NavType.IntType })
+                        ) { backStackEntry ->
+                            val mascotaId = backStackEntry.arguments?.getInt("mascotaId")
+                            if (mascotaId != null) {
+                                ListaRecordatoriosScreen(navController, mascotaId)
                             }
                         }
 

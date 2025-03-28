@@ -41,6 +41,10 @@ android {
 
 dependencies {
 
+    implementation("androidx.compose.material3:material3:1.1.1")
+    implementation("androidx.compose.material:material-icons-extended:1.4.3")
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
+
     implementation(libs.androidx.core.ktx)
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -51,6 +55,7 @@ dependencies {
     //Image loading
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.0")
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))

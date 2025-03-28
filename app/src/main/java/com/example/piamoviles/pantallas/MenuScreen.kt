@@ -68,7 +68,12 @@ fun MenuScreen(navController: NavController, mascotaId: Int) {
                 onClick = { navController.navigate("editar-mascota/${mascota.id}") },
                 modifier = Modifier.fillMaxWidth()
             )
-
+            Spacer(Modifier.padding(10.dp))
+            ActionButton(
+                text = "Recordatorios",
+                onClick = { navController.navigate("recordatorios/${mascota.id}") },
+                modifier = Modifier.fillMaxWidth()
+            )
         }
         Spacer(Modifier.padding(20.dp))
         ActionButton(

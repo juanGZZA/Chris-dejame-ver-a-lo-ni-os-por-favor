@@ -1,5 +1,4 @@
 package com.example.piamoviles.model
-
 data class Mascota(
     val id: Int,
     val nombre: String,
@@ -8,4 +7,5 @@ data class Mascota(
     val habitos: String,
     val salud: String,
     val notas: String,
+    val img: String? = null
 )

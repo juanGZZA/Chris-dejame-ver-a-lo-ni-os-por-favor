@@ -22,6 +22,7 @@ fun InformacionScreen(navController: NavController, mascotaId: Int) {
         content = {
             Text("Informacion sobre ${mascota?.nombre}:", Modifier.padding(8.dp))
             Text(mascota?.informacion ?: "", Modifier.padding(8.dp))
+            Text("Edad: ${mascota?.edad}", Modifier.padding(8.dp))
         }
     )
 }

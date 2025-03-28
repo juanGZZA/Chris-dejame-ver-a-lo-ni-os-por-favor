@@ -18,15 +18,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.piamoviles.repository.AuthRepository
 
 @Composable
 fun Registro(navController: NavController) {
+    val context = LocalContext.current
+    val authRepository = remember { AuthRepository(context) }
     var nombre by remember { mutableStateOf("") }
     var correoElectronico by remember { mutableStateOf("") }
     var contraseña by remember { mutableStateOf("") }
+    var isLoading by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
 
     Column(
         modifier = Modifier
@@ -42,7 +49,8 @@ fun Registro(navController: NavController) {
             onValueChange = { nombre = it },
             label = { Text("Nombre completo") },
             modifier = Modifier.fillMaxWidth(),
-            singleLine = true
+            singleLine = true,
+            enabled = !isLoading
         )
         Spacer(Modifier.padding(8.dp))
         OutlinedTextField(
@@ -50,7 +58,8 @@ fun Registro(navController: NavController) {
             onValueChange = { correoElectronico = it },
             label = { Text("Correo electrónico") },
             modifier = Modifier.fillMaxWidth(),
-            singleLine = true
+            singleLine = true,
+            enabled = !isLoading
         )
         Spacer(Modifier.padding(8.dp))
         OutlinedTextField(
@@ -58,16 +67,46 @@ fun Registro(navController: NavController) {
             onValueChange = { contraseña = it },
             label = { Text("Contraseña") },
             modifier = Modifier.fillMaxWidth(),
-            singleLine = true
+            singleLine = true,
+            visualTransformation = PasswordVisualTransformation(),
+            enabled = !isLoading
         )
+
+        if (errorMessage != null) {
+            Text(
+                text = errorMessage!!,
+                color = Color.Red,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+        }
+
         Spacer(Modifier.padding(16.dp))
         ActionButton(
-            text = "Registrarse",
-            onClick = { navController.popBackStack() },
+            text = if (isLoading) "Procesando..." else "Registrarse",
+            onClick = {
+                if (!isLoading && nombre.isNotEmpty() && correoElectronico.isNotEmpty() && contraseña.isNotEmpty()) {
+                    isLoading = true
+                    errorMessage = null
+                    authRepository.register(nombre, correoElectronico, contraseña) { success, message ->
+                        isLoading = false
+                        if (success) {
+                            navController.navigate("mascotas") {
+                                popUpTo("registro") { inclusive = true }
+                            }
+                        } else {
+                            errorMessage = message
+                        }
+                    }
+                } else {
+                    errorMessage = "Por favor complete todos los campos"
+                }
+            },
             modifier = Modifier.fillMaxWidth()
         )
+
+        Spacer(Modifier.padding(8.dp))
         ActionButton(
-            text = "Iniciar Sesion",
+            text = "Volver a Iniciar Sesión",
             onClick = { navController.popBackStack() },
             modifier = Modifier.fillMaxWidth()
         )
